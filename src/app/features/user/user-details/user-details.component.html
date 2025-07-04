@@ -1,0 +1,79 @@
+<div class="user-details-container">  
+  <mat-card appearance="outlined" class="user-details-card">
+    <button class="dialog-close-btn" mat-icon-button (click)="closeDialog()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-card-header>
+      <mat-card-title>User Details</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="user-profile-section">
+        <div class="user-avatar">
+          <div class="avatar-circle" matTooltip="User avatar">
+            {{ user.name.charAt(0) }}{{ (user.name.split(' ')[1] || '').charAt(0) }}
+          </div>
+          <div class="user-role">
+            <span class="role-chip" [ngClass]="user.role.toLowerCase()">{{ user.role }}</span>
+          </div>
+        </div>
+        
+        <div class="user-info">
+          <mat-card class="info-card">
+            <mat-card-subtitle>Personal Information</mat-card-subtitle>
+            <mat-card-content>
+              <div class="info-row">
+                <span class="info-label">Name:</span>
+                <span class="info-value">{{ user.name }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">{{ user.email }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Phone:</span>
+                <span class="info-value">{{ user.phone }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Address:</span>
+                <span class="info-value">{{ user.address }}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          
+          <mat-card class="info-card">
+            <mat-card-subtitle>Account Details</mat-card-subtitle>
+            <mat-card-content>
+              <div class="info-row">
+                <span class="info-label">User ID:</span>
+                <span class="info-value">{{ user.id }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Join Date:</span>
+                <span class="info-value">{{ user.joinDate | date:'mediumDate' }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Role:</span>
+                <span class="info-value">{{ user.role }}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-stroked-button color="warn" matTooltip="Delete this user" class="action-button">
+        <mat-icon>delete</mat-icon>
+        <span class="button-text">Delete</span>
+      </button>
+      <button mat-stroked-button color="primary" matTooltip="Edit user information" class="action-button">
+        <mat-icon>edit</mat-icon>
+        <span class="button-text">Edit</span>
+      </button>
+      <button mat-raised-button color="primary" (click)="closeDialog()" matTooltip="Close dialog" class="action-button">
+        <span class="button-text">Close</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

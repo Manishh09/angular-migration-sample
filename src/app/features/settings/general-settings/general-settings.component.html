@@ -1,0 +1,101 @@
+<div class="tab-content">
+  <form [formGroup]="generalForm" (ngSubmit)="saveGeneralSettings()">
+    <div class="settings-section">
+      <h2>Preferences</h2>
+      <p>Customize your application experience with these general settings.</p>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Language</mat-label>
+          <mat-select formControlName="language">
+            <mat-option value="english">
+              <div class="option-with-flag">
+                <span class="flag-icon">🇺🇸</span>
+                <span>English</span>
+              </div>
+            </mat-option>
+            <mat-option value="french">
+              <div class="option-with-flag">
+                <span class="flag-icon">🇫🇷</span>
+                <span>French</span>
+              </div>
+            </mat-option>
+            <mat-option value="german">
+              <div class="option-with-flag">
+                <span class="flag-icon">🇩🇪</span>
+                <span>German</span>
+              </div>
+            </mat-option>
+            <mat-option value="spanish">
+              <div class="option-with-flag">
+                <span class="flag-icon">🇪🇸</span>
+                <span>Spanish</span>
+              </div>
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>language</mat-icon>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Timezone</mat-label>
+          <mat-select formControlName="timezone">
+            <mat-option value="UTC">UTC (Coordinated Universal Time)</mat-option>
+            <mat-option value="EST">Eastern Standard Time (EST)</mat-option>
+            <mat-option value="CST">Central Standard Time (CST)</mat-option>
+            <mat-option value="PST">Pacific Standard Time (PST)</mat-option>
+            <mat-option value="GMT">Greenwich Mean Time (GMT)</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>schedule</mat-icon>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Date Format</mat-label>
+          <mat-select formControlName="dateFormat">
+            <mat-option value="MM/DD/YYYY">MM/DD/YYYY (US Format)</mat-option>
+            <mat-option value="DD/MM/YYYY">DD/MM/YYYY (European Format)</mat-option>
+            <mat-option value="YYYY-MM-DD">YYYY-MM-DD (ISO Format)</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Theme</mat-label>
+          <mat-select formControlName="theme">
+            <mat-option value="light">
+              <div class="theme-option">
+                <mat-icon>light_mode</mat-icon>
+                <span>Light</span>
+              </div>
+            </mat-option>
+            <mat-option value="dark">
+              <div class="theme-option">
+                <mat-icon>dark_mode</mat-icon>
+                <span>Dark</span>
+              </div>
+            </mat-option>
+            <mat-option value="system">
+              <div class="theme-option">
+                <mat-icon>devices</mat-icon>
+                <span>System Default</span>
+              </div>
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>palette</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button mat-stroked-button type="button" class="reset-button" (click)="resetToDefaults()">
+        <mat-icon>restart_alt</mat-icon>
+        <span>Reset to Default</span>
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="generalForm.invalid || generalForm.pristine">
+        <mat-icon>save</mat-icon>
+        <span>Save Changes</span>
+      </button>
+    </div>
+  </form>
+</div>

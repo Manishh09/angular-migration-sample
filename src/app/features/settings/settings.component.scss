@@ -1,0 +1,337 @@
+.settings-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.75rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .version-badge {
+    margin-left: 1rem;
+    background: rgba(0, 0, 0, 0.08);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.settings-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.settings-tabs {
+  // Enhance tab appearance
+  ::ng-deep .mat-tab-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    margin-bottom: 0;
+    
+    .mat-tab-label {
+      min-width: 160px;
+      padding: 0 24px;
+      height: 54px;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      
+      &.mat-tab-label-active {
+        opacity: 1;
+        font-weight: 500;
+      }
+      
+      &:hover:not(.mat-tab-label-active) {
+        opacity: 0.9;
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+      
+      @media (max-width: 768px) {
+        min-width: 120px;
+        padding: 0 16px;
+      }
+      
+      @media (max-width: 480px) {
+        min-width: 100px;
+        padding: 0 12px;
+      }
+    }
+    
+    .mat-ink-bar {
+      height: 3px;
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+.tab-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    margin-right: 0.5rem;
+    opacity: 0.9;
+  }
+  
+  span {
+    font-weight: 400;
+    font-size: 0.95rem;
+    
+    @media (max-width: 480px) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Global tab styles that apply to all tabs */
+:host ::ng-deep {
+  .tab-content {
+    padding: 1.5rem;
+    overflow: auto;
+    max-height: calc(100vh - 12rem);
+  }
+  
+  .mat-tab-body-wrapper {
+    padding-bottom: 1rem;
+  }
+  
+  .mat-tab-body-content {
+    overflow: visible !important;
+  }
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  
+  mat-form-field {
+    flex: 1;
+    min-width: 250px;
+    
+    &.full-width {
+      flex: 0 0 100%;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  gap: 1rem;
+  
+  button {
+    display: flex;
+    align-items: center;
+    
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .reset-button {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.switch-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .switch-label {
+    h4 {
+      margin: 0 0 0.25rem;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #666;
+    }
+  }
+}
+
+.password-hint {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  
+  strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.requirement-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+    color: rgba(0, 0, 0, 0.6);
+    
+    mat-icon {
+      margin-right: 0.5rem;
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    
+    &.fulfilled {
+      color: #43a047;
+      
+      mat-icon {
+        color: #43a047;
+      }
+    }
+  }
+}
+
+.password-strength-meter {
+  margin: 1rem 0;
+  
+  .password-strength-label {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .strength-bars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.5rem;
+    
+    .strength-bar {
+      flex: 1;
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      
+      &.weak {
+        background-color: #f44336;
+      }
+      
+      &.medium {
+        background-color: #ff9800;
+      }
+      
+      &.strong {
+        background-color: #4caf50;
+      }
+      
+      &.very-strong {
+        background-color: #2e7d32;
+      }
+    }
+  }
+  
+  .strength-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    
+    &.weak-text {
+      color: #f44336;
+    }
+    
+    &.medium-text {
+      color: #ff9800;
+    }
+    
+    &.strong-text {
+      color: #4caf50;
+    }
+    
+    &.very-strong-text {
+      color: #2e7d32;
+    }
+  }
+}
+
+.mismatch-error {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0 1rem;
+  
+  mat-icon {
+    margin-right: 0.5rem;
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.option-with-flag, .theme-option {
+  display: flex;
+  align-items: center;
+  
+  .flag-icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  mat-icon {
+    margin-right: 0.5rem;
+  }
+}

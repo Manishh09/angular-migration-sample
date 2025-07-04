@@ -1,0 +1,103 @@
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+// Avatar button styles
+.user-avatar-button {
+  margin-left: 8px;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid white;
+  }
+}
+
+.user-initials {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+// Menu panel styles
+.menu-panel {
+  background: white;
+  border-radius: 8px;
+  min-width: 240px;
+  overflow: hidden;
+  transform-origin: top right;
+  margin-top: 8px;
+  z-index: 1000;
+}
+
+// User info section styles
+.user-info {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.avatar-large {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #3f51b5;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.username {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+// Menu items styles
+.menu-items {
+  padding: 8px 0;
+}
+
+// Keyboard navigation focus indicator
+:host ::ng-deep .mat-menu-item:focus-visible {
+  background-color: rgba(0, 0, 0, 0.04);
+  outline: none;
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

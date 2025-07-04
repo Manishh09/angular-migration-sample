@@ -1,0 +1,63 @@
+<div class="user-menu-container">
+  <!-- User avatar/initials button that toggles the menu -->
+  <button 
+    class="user-avatar-button" 
+    mat-mini-fab 
+    color="primary" 
+    aria-label="User menu" 
+    [attr.aria-expanded]="isMenuOpen"
+    (click)="toggleMenu()"
+    cdkOverlayOrigin
+    #menuTrigger="cdkOverlayOrigin">
+    <span class="user-initials">{{ userInitials }}</span>
+  </button>
+
+  <!-- Overlay menu -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="menuTrigger"
+    [cdkConnectedOverlayOpen]="isMenuOpen"
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayPositions]="[
+      { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' }
+    ]"
+    (backdropClick)="closeMenu()">
+    
+    <div class="menu-panel mat-elevation-z4" [@menuAnimation]="'open'" role="menu" tabindex="-1">
+      <!-- User info section -->
+      <div class="user-info">
+        <div class="avatar-large">
+          <span>{{ userInitials }}</span>
+        </div>
+        <div class="user-details">
+          <div class="username">{{ username || 'User' }}</div>
+          <div class="user-role">{{ authService.getUserRole() }}</div>
+        </div>
+      </div>
+      
+      <!-- Menu divider -->
+      <mat-divider></mat-divider>
+      
+      <!-- Menu items -->
+      <div class="menu-items">
+        <!-- Profile option -->
+        <button mat-menu-item aria-label="View profile" (click)="navigateTo('/profile')">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        
+        <!-- Settings option -->
+        <button mat-menu-item aria-label="View settings" (click)="navigateTo('/settings')">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        
+        <!-- Logout option (mandatory) -->
+        <button mat-menu-item aria-label="Log out" (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

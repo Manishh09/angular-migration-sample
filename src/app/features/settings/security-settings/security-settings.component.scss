@@ -1,0 +1,23 @@
+@import '../settings-shared';
+
+// Additional styles specific to security settings
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    transition: color 0.2s ease;
+  }
+
+  // Style for input fields related to password
+  .mat-form-field.password-field {
+    .mat-form-field-outline {
+      &.mat-form-field-outline-thick {
+        color: rgba(0, 0, 0, 0.15);
+      }
+    }
+    
+    &.mat-focused:not(.mat-form-field-invalid) {
+      .mat-form-field-outline-thick {
+        color: #4caf50;
+      }
+    }
+  }
+}

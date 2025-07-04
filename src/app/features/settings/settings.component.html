@@ -1,0 +1,51 @@
+<div class="settings-container">
+  <div class="page-header">
+    <h1>Settings</h1>
+    <span class="version-badge">v1.0</span>
+  </div>
+
+  <mat-card class="settings-card">
+    <mat-tab-group 
+      (selectedIndexChange)="onTabChange($event)" 
+      [selectedIndex]="selectedTab" 
+      animationDuration="300ms" 
+      mat-stretch-tabs="false" 
+      mat-align-tabs="start"
+      class="settings-tabs">
+      
+      <!-- General Settings Tab -->
+      <mat-tab>
+        <ng-template matTabLabel>
+          <div class="tab-label" aria-label="General settings tab">
+            <mat-icon>tune</mat-icon>
+            <span>General</span>
+          </div>
+        </ng-template>
+        <app-general-settings></app-general-settings>
+      </mat-tab>
+      
+      <!-- Security Tab -->
+      <mat-tab>
+        <ng-template matTabLabel>
+          <div class="tab-label" aria-label="Security settings tab">
+            <mat-icon>security</mat-icon>
+            <span>Security</span>
+          </div>
+        </ng-template>
+        <app-security-settings></app-security-settings>
+      </mat-tab>
+      
+      <!-- Notifications Tab -->
+      <mat-tab>
+        <ng-template matTabLabel>
+          <div class="tab-label" aria-label="Notification settings tab">
+            <mat-icon>notifications</mat-icon>
+            <span>Notifications</span>
+          </div>
+        </ng-template>
+        <app-notification-settings></app-notification-settings>
+      </mat-tab>
+      
+    </mat-tab-group>
+  </mat-card>
+</div>

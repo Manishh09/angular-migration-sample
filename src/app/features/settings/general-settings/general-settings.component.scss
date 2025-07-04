@@ -1,0 +1,18 @@
+@import '../settings-shared';
+
+// Additional styles specific to general settings
+.option-with-flag {
+  .flag-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.theme-option {
+  mat-icon {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

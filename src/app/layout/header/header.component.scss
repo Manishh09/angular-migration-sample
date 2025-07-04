@@ -1,0 +1,66 @@
+mat-toolbar {
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: inline-flex;       /* align items horizontally */
+  align-items: center;        /* vertically center image and text */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;               /* adjust based on your header bg */
+  gap: 0.5rem;                /* space between image and text */
+}
+
+.logo img {
+  height: 32px;               /* fixed height for logo */
+  width: 32px;                /* keep square */
+  object-fit: contain;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    
+    mat-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+    }
+  }
+}
+
+a.active-link {
+  background-color: rgba(255, 255, 255, 0.15);
+  font-weight: bold;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .mobile-menu-button {
+    display: block;
+  }
+  
+  .logo span {
+    display: none; /* Hide logo text on mobile */
+  }
+}

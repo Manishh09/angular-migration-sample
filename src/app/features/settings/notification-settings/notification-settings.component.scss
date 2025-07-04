@@ -1,0 +1,23 @@
+@import '../settings-shared';
+
+// Additional styles specific to notification settings
+.notification-groups {
+  margin-top: 1rem;
+}
+
+::ng-deep {
+  .mat-slide-toggle.mat-primary.mat-checked {
+    .mat-slide-toggle-bar {
+      background-color: rgba(63, 81, 181, 0.5);
+    }
+    
+    .mat-slide-toggle-thumb {
+      background-color: #3f51b5;
+    }
+  }
+  
+  // Add a subtle ripple effect to the toggle
+  .mat-slide-toggle-ripple {
+    transition: opacity 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+  }
+}

@@ -1,0 +1,110 @@
+<div class="tab-content">
+  <form [formGroup]="securityForm" (ngSubmit)="saveSecuritySettings()">
+    <div class="settings-section">
+      <h2>Change Password</h2>
+      <p>Update your password to keep your account secure.</p>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width password-field">
+          <mat-label>Current Password</mat-label>
+          <input matInput [type]="hideCurrentPassword ? 'password' : 'text'" formControlName="currentPassword" autocomplete="current-password">
+          <button mat-icon-button matSuffix type="button" (click)="hideCurrentPassword = !hideCurrentPassword" [attr.aria-label]="'Toggle password visibility'" tabindex="-1">
+            <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-error *ngIf="currentPasswordControl?.hasError('required')">
+            Current password is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width password-field">
+          <mat-label>New Password</mat-label>
+          <input matInput [type]="hideNewPassword ? 'password' : 'text'" formControlName="newPassword" autocomplete="new-password">
+          <button mat-icon-button matSuffix type="button" (click)="hideNewPassword = !hideNewPassword" [attr.aria-label]="'Toggle password visibility'" tabindex="-1">
+            <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-icon matPrefix>vpn_key</mat-icon>
+          <mat-error *ngIf="newPasswordControl?.hasError('required')">
+            New password is required
+          </mat-error>
+          <mat-error *ngIf="newPasswordControl?.hasError('minlength')">
+            Password must be at least 8 characters
+          </mat-error>
+          <mat-error *ngIf="newPasswordControl?.hasError('pattern')">
+            Password must include uppercase, lowercase, number and special character
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width password-field">
+          <mat-label>Confirm New Password</mat-label>
+          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" autocomplete="new-password">
+          <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Toggle password visibility'" tabindex="-1">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-icon matPrefix>done_all</mat-icon>
+          <mat-error *ngIf="confirmPasswordControl?.hasError('required')">
+            Please confirm your password
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="password-strength-meter" *ngIf="newPasswordControl?.value">
+        <div class="password-strength-label">Password Strength:</div>
+        <div class="strength-bars">
+          <div class="strength-bar" [ngClass]="getPasswordStrengthClass(0)"></div>
+          <div class="strength-bar" [ngClass]="getPasswordStrengthClass(1)"></div>
+          <div class="strength-bar" [ngClass]="getPasswordStrengthClass(2)"></div>
+          <div class="strength-bar" [ngClass]="getPasswordStrengthClass(3)"></div>
+        </div>
+        <div class="strength-text" [ngClass]="getPasswordStrengthTextClass()">
+          {{getPasswordStrengthText()}}
+        </div>
+      </div>
+      
+      <mat-error *ngIf="passwordMismatch" class="mismatch-error">
+        <mat-icon>error_outline</mat-icon> Passwords do not match
+      </mat-error>
+      
+      <div class="password-hint">
+        <strong>Password requirements:</strong>
+        <ul class="requirement-list">
+          <li [class.fulfilled]="hasMinLength(newPasswordControl?.value)">
+            <mat-icon>{{ hasMinLength(newPasswordControl?.value) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            At least 8 characters long
+          </li>
+          <li [class.fulfilled]="hasUppercase(newPasswordControl?.value)">
+            <mat-icon>{{ hasUppercase(newPasswordControl?.value) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            At least one uppercase letter (A-Z)
+          </li>
+          <li [class.fulfilled]="hasLowercase(newPasswordControl?.value)">
+            <mat-icon>{{ hasLowercase(newPasswordControl?.value) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            At least one lowercase letter (a-z)
+          </li>
+          <li [class.fulfilled]="hasNumber(newPasswordControl?.value)">
+            <mat-icon>{{ hasNumber(newPasswordControl?.value) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            At least one number (0-9)
+          </li>
+          <li [class.fulfilled]="hasSpecialChar(newPasswordControl?.value)">
+            <mat-icon>{{ hasSpecialChar(newPasswordControl?.value) ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            At least one special character (!&#64;#$%^&amp;*)
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button mat-stroked-button type="button" class="reset-button" (click)="resetForm()">
+        <mat-icon>refresh</mat-icon>
+        <span>Reset Form</span>
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="securityForm.invalid">
+        <mat-icon>save</mat-icon>
+        <span>Update Password</span>
+      </button>
+    </div>
+  </form>
+</div>

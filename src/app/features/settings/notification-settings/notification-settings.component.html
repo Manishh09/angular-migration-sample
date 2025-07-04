@@ -1,0 +1,53 @@
+<div class="tab-content">
+  <form [formGroup]="notificationsForm" (ngSubmit)="saveNotificationSettings()">
+    <div class="settings-section">
+      <h2>Notification Preferences</h2>
+      <p>Manage how and when you receive notifications from the application.</p>
+      
+      <div class="notification-groups">
+        <div class="switch-group">
+          <div class="switch-label">
+            <h4>Email Notifications</h4>
+            <p>Receive notifications via email</p>
+          </div>
+          <mat-slide-toggle formControlName="emailNotifications" color="primary" aria-label="Toggle email notifications"></mat-slide-toggle>
+        </div>
+        
+        <div class="switch-group">
+          <div class="switch-label">
+            <h4>Push Notifications</h4>
+            <p>Receive notifications in your browser</p>
+          </div>
+          <mat-slide-toggle formControlName="pushNotifications" color="primary" aria-label="Toggle push notifications"></mat-slide-toggle>
+        </div>
+        
+        <div class="switch-group">
+          <div class="switch-label">
+            <h4>Marketing Emails</h4>
+            <p>Receive news and updates about our products</p>
+          </div>
+          <mat-slide-toggle formControlName="marketingEmails" color="primary" aria-label="Toggle marketing emails"></mat-slide-toggle>
+        </div>
+        
+        <div class="switch-group">
+          <div class="switch-label">
+            <h4>Activity Summary</h4>
+            <p>Receive weekly summaries of your account activity</p>
+          </div>
+          <mat-slide-toggle formControlName="activitySummary" color="primary" aria-label="Toggle activity summary"></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button mat-stroked-button type="button" class="reset-button" (click)="resetDefaults()">
+        <mat-icon>restore</mat-icon>
+        <span>Reset to Default</span>
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="notificationsForm.invalid || notificationsForm.pristine">
+        <mat-icon>save</mat-icon>
+        <span>Save Preferences</span>
+      </button>
+    </div>
+  </form>
+</div>

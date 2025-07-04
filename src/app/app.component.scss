@@ -1,0 +1,85 @@
+/* Global variables */
+:host {
+  --header-height: 64px;
+  --footer-height: 56px;
+  --content-max-width: 1200px;
+  --primary-color: #3f51b5;
+  --background-color: #f5f7fa;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 600px) {
+    --header-height: 56px;
+  }
+}
+
+/* Full viewport height and vertical layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Use exact viewport height */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow: hidden; /* Hide overflow on container */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+/* Fixed header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: var(--header-height);
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Content area grows to fill available space */
+.app-content {
+  flex: 1;
+  width: 100%;
+  background-color: var(--background-color); /* Match the app container background */
+  position: relative;
+  overflow-y: hidden; /* Enable vertical scrolling only within content */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  
+  /* No fixed height calculation to avoid double scrollbars */
+  /* We'll let the flex layout handle the sizing */
+  
+  /* Add a subtle transition for smoother rendering */
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none; /* Remove focus outline for better aesthetics */
+  }
+  
+  /* Ensure scrollbar positioning doesn't cause layout shift */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Footer styles */
+.footer {
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  width: 100%;
+  z-index: 990; /* Lower than header but still above content when needed */
+  position: relative; /* Ensure footer is positioned properly */
+}
+
+/* Media queries for responsive adjustments */
+@media (max-width: 600px) {
+  :host {
+    --header-height: 56px;
+  }
+  
+  /* Adjust scrollbar for touch devices */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+}

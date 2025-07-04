@@ -1,0 +1,81 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+      <mat-card-subtitle>Enter your credentials to sign in</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <!-- Username field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input 
+            matInput 
+            placeholder="Enter your username" 
+            formControlName="username"
+            required
+            autocomplete="username">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="f['username'].errors?.['required']">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input 
+            matInput 
+            [type]="hidePassword ? 'password' : 'text'" 
+            placeholder="Enter your password"
+            formControlName="password"
+            required
+            autocomplete="current-password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            mat-icon-button 
+            type="button" 
+            matSuffix 
+            (click)="hidePassword = !hidePassword" 
+            [attr.aria-label]="'Hide password'" 
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="f['password'].errors?.['required']">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="f['password'].errors?.['minlength']">
+            Password must be at least 4 characters
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Remember me checkbox -->
+        <div class="remember-me">
+          <mat-checkbox formControlName="rememberMe" color="primary">
+            Remember me
+          </mat-checkbox>
+        </div>
+
+        <!-- Admin hint -->
+        <div class="hint-text">
+          <p><em>Hint: Include "admin" in your username to login as an administrator</em></p>
+        </div>
+
+        <!-- Submit button -->
+        <div class="button-container">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading"
+            class="login-button">
+            <mat-icon *ngIf="!isLoading">login</mat-icon>
+            <mat-spinner *ngIf="isLoading" diameter="24" class="button-spinner"></mat-spinner>
+            <span>{{ isLoading ? 'Logging in...' : 'Login' }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

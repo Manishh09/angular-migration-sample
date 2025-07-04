@@ -1,0 +1,130 @@
+<div class="profile-container">
+  <div class="page-header">
+    <div class="page-title">
+      <h1>My Profile</h1>
+      <div class="last-updated" *ngIf="lastUpdated">Last updated: {{ lastUpdated | date:'medium' }}</div>
+    </div>
+    <span class="spacer"></span>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      *ngIf="!isEditing"
+      (click)="toggleEditMode()"
+      aria-label="Edit profile">
+      <mat-icon>edit</mat-icon>
+      Edit Profile
+    </button>
+  </div>
+
+  <div class="profile-content">
+    <mat-card class="profile-card">
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="avatar-container" [class.editable]="isEditing">
+            <div class="avatar-circle" [style.background-color]="avatarColor" aria-hidden="true">
+              <span>{{ userInitials }}</span>
+            </div>
+            <button 
+              *ngIf="isEditing" 
+              mat-mini-fab 
+              color="primary" 
+              class="edit-avatar-btn"
+              type="button"
+              aria-label="Change profile picture">
+              <mat-icon>photo_camera</mat-icon>
+            </button>
+          </div>
+          <div class="profile-title">
+            <h2>{{ fullName || 'Your Profile' }}</h2>
+            <div class="role-badge" [class.admin]="authService.isAdmin()">
+              {{ authService.getUserRole() }}
+            </div>
+            <div class="account-status" *ngIf="authService.isAdmin()">
+              <mat-icon class="verified-icon">verified</mat-icon> Verified Account
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Profile Form -->
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" placeholder="Enter your first name" autocomplete="given-name">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="formControls['firstName'].hasError('required')">
+              First name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Enter your last name" autocomplete="family-name">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="formControls['lastName'].hasError('required')">
+              Last name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="email" placeholder="Enter your email" type="email" autocomplete="email">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="formControls['email'].hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="formControls['email'].hasError('email')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone" placeholder="Enter your phone number" type="tel" autocomplete="tel">
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="formControls['phone'].hasError('pattern')">
+              Please enter a valid phone number
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Bio</mat-label>
+            <textarea matInput formControlName="bio" placeholder="Tell us about yourself" rows="4" maxlength="500"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+            <mat-hint align="end">{{ formControls['bio'].value?.length || 0 }}/500</mat-hint>
+            <mat-error *ngIf="formControls['bio'].hasError('maxlength')">
+              Bio cannot exceed 500 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions" *ngIf="isEditing">
+          <button 
+            mat-stroked-button 
+            type="button" 
+            (click)="cancelEdit()"
+            aria-label="Cancel editing">
+            <mat-icon>close</mat-icon> Cancel
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="profileForm.invalid || profileForm.pristine"
+            aria-label="Save profile changes">
+            <mat-icon>save</mat-icon> Save Changes
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

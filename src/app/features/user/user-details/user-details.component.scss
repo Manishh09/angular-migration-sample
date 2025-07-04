@@ -1,0 +1,318 @@
+.user-details-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: visible !important;
+  max-width: 100%;
+  max-height: none !important;
+  
+  // Close button styling
+  .dialog-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.54);
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+      color: rgba(0, 0, 0, 0.87);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+    }
+  }
+  
+  // Main card styling
+  .user-details-card {
+    width: 100%;
+    border-radius: 8px; /* Slightly more rounded corners */
+    background-color: #fff;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: visible !important; /* Allow content to be fully visible */
+    height: auto !important; /* Allow height to adjust to content */
+    max-height: none !important; /* Remove height restriction */
+    min-height: auto !important; /* Remove minimum height constraint */
+    
+    mat-card-header {
+      background: #f5f7fa;
+      padding: 16px 24px;
+      border-bottom: none;
+      min-height: 24px;
+      
+      mat-card-title {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.87);
+        letter-spacing: 0.15px;
+      }
+    }
+    
+    mat-card-content {
+      padding: 0;
+      overflow: visible !important; /* Prevent scrolling completely */
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-height: none !important; /* Remove height restriction */
+      height: auto !important; /* Allow content to determine height */
+      
+      /* Disable keyboard scrolling and mouse scrolling */
+      pointer-events: auto;
+      &:focus {
+        outline: none;
+      }
+    }
+    
+    mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 24px;
+      gap: 12px;
+      background-color: white;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin: 0;
+      flex-shrink: 0;
+      position: relative; /* Standard positioning */
+      z-index: 5; /* Ensure it stays above content */
+      bottom: 0; /* Align to bottom */
+      
+      button.action-button {
+        min-width: 90px; /* Increased to ensure text fits */
+        border-radius: 4px;
+        padding: 0 16px; /* Ensure consistent padding */
+        height: 36px; /* Explicit height */
+        line-height: 36px; /* Match height for vertical centering */
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .button-text {
+          display: inline-block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        &[color="warn"] {
+          color: #f44336;
+        }
+        
+        &[color="primary"] {
+          color: #3f51b5;
+        }
+        
+        &[mat-raised-button] {
+          box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 
+                     0 2px 2px 0 rgba(0,0,0,.14), 
+                     0 1px 5px 0 rgba(0,0,0,.12);
+        }
+        
+        mat-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          height: 18px;
+          width: 18px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+  
+  // User profile section layout
+  .user-profile-section {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px;
+    background-color: white;
+    overflow: visible !important; /* Allow full content visibility */
+    height: auto !important; /* Auto height to fit content */
+    max-height: none !important; /* Remove height restriction */
+    width: auto !important; /* Auto width */
+    max-width: 100% !important; /* Prevent horizontal overflow */
+    
+    /* Disable keyboard and mouse scrolling */
+    pointer-events: auto;
+    &:focus {
+      outline: none;
+    }
+    
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+  
+  // Avatar styling
+  .user-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+    
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+      margin-right: 24px;
+      width: 140px;
+      flex-shrink: 0;
+    }
+    
+    .avatar-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #4f64c2;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    .user-role {
+      margin-top: 8px;
+    }
+  }
+  
+  // User info section
+  .user-info {
+    flex: 1;
+    overflow: visible !important; /* Allow full content visibility */
+    display: flex;
+    flex-direction: column;
+    height: auto !important; /* Auto height to fit content */
+    max-height: none !important; /* Remove height restriction */
+    width: 100% !important; /* Full width */
+    max-width: 100% !important; /* Prevent horizontal overflow */
+    
+    /* Disable keyboard and mouse scrolling */
+    pointer-events: auto;
+    &:focus {
+      outline: none;
+    }
+    
+    .info-card {
+      margin-bottom: 16px;
+      border-radius: 4px;
+      box-shadow: none;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      overflow: visible !important; /* Allow content to be fully visible */
+      width: 100% !important; /* Full width */
+      max-width: 100% !important; /* Prevent horizontal overflow */
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      mat-card-subtitle {
+        color: #3f51b5;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 12px;
+        padding: 16px 16px 8px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      
+      mat-card-content {
+        padding: 8px 16px 16px;
+        overflow: visible !important; /* Allow content to be fully visible */
+        max-height: none !important; /* Remove height restrictions completely */
+        height: auto !important; /* Allow content to determine height */
+        width: 100% !important; /* Ensure full width */
+        max-width: 100% !important; /* Prevent horizontal scrolling */
+      }
+    }
+    
+    .info-row {
+      display: flex;
+      margin-bottom: 12px; /* Slightly more space between rows */
+      min-height: 24px; /* Minimum height for consistency */
+      align-items: flex-start; /* Align to top for multi-line content */
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .info-label {
+        min-width: 90px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.6);
+        flex-shrink: 0;
+        padding-top: 2px; /* Slight offset for better alignment */
+      }
+      
+      .info-value {
+        color: rgba(0, 0, 0, 0.87);
+        word-break: break-word;
+        flex: 1;
+        line-height: 1.5;
+        overflow: visible !important; /* Allow text to be fully visible */
+        max-width: 100% !important; /* Ensure text stays within container */
+        white-space: normal !important; /* Ensure text wraps */
+      }
+    }
+  }
+  
+  // Role chip styling
+  .role-chip {
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.6);
+    
+    &.admin {
+      background-color: rgba(25, 118, 210, 0.1);
+      color: #1976d2;
+    }
+    
+    &.user {
+      background-color: rgba(56, 142, 60, 0.1);
+      color: #388e3c;
+    }
+    
+    &.manager {
+      background-color: rgba(245, 124, 0, 0.1);
+      color: #f57c00;
+    }
+  }
+}
+
