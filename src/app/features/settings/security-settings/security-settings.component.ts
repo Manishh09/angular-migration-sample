@@ -1,14 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SettingsService } from '../services/settings.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+interface PasswordForm {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 @Component({
   selector: 'app-security-settings',
   templateUrl: './security-settings.component.html',
-  styleUrls: ['./security-settings.component.scss']
+  styleUrls: ['./security-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SecuritySettingsComponent implements OnInit {
+export class SecuritySettingsComponent implements OnInit, OnDestroy {
   securityForm!: FormGroup;
+  private destroy$ = new Subject<void>();
   
   // Password visibility toggles
   hideCurrentPassword = true;
@@ -17,14 +28,20 @@ export class SecuritySettingsComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
-  initForm(): void {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initForm(): void {
     this.securityForm = this.fb.group({
       currentPassword: ['', Validators.required],
       newPassword: ['', [
@@ -36,7 +53,7 @@ export class SecuritySettingsComponent implements OnInit {
     }, { validators: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+  private passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const newPassword = group.get('newPassword')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     
@@ -46,15 +63,19 @@ export class SecuritySettingsComponent implements OnInit {
   saveSecuritySettings(): void {
     if (this.securityForm.invalid) return;
     
-    // In a real app, you would validate current password and update password via API
-    console.log('Security settings:', this.securityForm.value);
-    this.snackbarService.success('Password updated successfully');
-    this.securityForm.reset();
+    const formData = this.securityForm.value as PasswordForm;
     
-    // Reset visibility toggles after form reset
-    this.hideCurrentPassword = true;
-    this.hideNewPassword = true;
-    this.hideConfirmPassword = true;
+    this.settingsService.changePassword(formData.currentPassword, formData.newPassword)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.snackbarService.success('Password updated successfully');
+        this.securityForm.reset();
+        
+        // Reset visibility toggles after form reset
+        this.hideCurrentPassword = true;
+        this.hideNewPassword = true;
+        this.hideConfirmPassword = true;
+      });
   }
   
   resetForm(): void {
