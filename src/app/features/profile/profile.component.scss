@@ -1,9 +1,11 @@
+// Profile container layout
 .profile-container {
   padding: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+// Header section
 .page-header {
   display: flex;
   align-items: center;
@@ -28,6 +30,7 @@
   }
 }
 
+// Card styling
 .profile-card {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -40,6 +43,7 @@
   }
 }
 
+// Content layout
 .profile-content {
   display: flex;
   flex-direction: column;
@@ -49,6 +53,7 @@
   }
 }
 
+// Profile header section
 .profile-header {
   display: flex;
   padding: 1.5rem;
@@ -61,6 +66,7 @@
   }
 }
 
+// Avatar styling
 .avatar-container {
   position: relative;
   margin-right: 2rem;
@@ -106,6 +112,7 @@
   transform: translate(20%, 20%);
 }
 
+// Profile info styling
 .profile-title {
   h2 {
     margin: 0 0 0.5rem;
@@ -131,6 +138,7 @@
   }
 }
 
+// Form layout
 .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -152,6 +160,7 @@
   }
 }
 
+// Action buttons
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -168,6 +177,7 @@
   }
 }
 
+// Misc elements
 mat-divider {
   margin: 0.5rem 0;
 }

@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
+import { ProfileService, UserProfile } from './services/profile.service';
+import { Subject, finalize, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   isEditing = false;
   userInitials = '';
   lastUpdated = new Date();
   avatarColor = '#3f51b5'; // Default Material primary color
+  loading = false;
+  
+  private destroy$ = new Subject<void>();
   
   constructor(
     private fb: FormBuilder,
     public authService: AuthService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private profileService: ProfileService
   ) {
     this.profileForm = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.pattern(/^\+?[0-9\s\-\(\)]+$/)]],
-      bio: ['', [Validators.maxLength(500)]]
+      firstName: this.fb.control('', [Validators.required]),
+      lastName: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      phone: this.fb.control('', [Validators.pattern(/^\+?[0-9\s\-\(\)]+$/)]),
+      bio: this.fb.control('', [Validators.maxLength(500)])
     });
     
     // Disable form fields initially
@@ -34,7 +41,11 @@ export class ProfileComponent implements OnInit {
   
   ngOnInit(): void {
     this.loadUserProfile();
-    this.generateUserInitials();
+  }
+  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
   toggleEditMode(): void {
@@ -52,14 +63,35 @@ export class ProfileComponent implements OnInit {
       return;
     }
     
-    // In a real app, you would send the data to an API
-    // Mock save operation
-    setTimeout(() => {
-      this.lastUpdated = new Date(); // Update the timestamp
-      this.snackbarService.success('Profile updated successfully!');
-      this.toggleEditMode();
-      this.generateUserInitials();
-    }, 800);
+    this.loading = true;
+    
+    // Convert form values to UserProfile and handle potential null values
+    const formValues = this.profileForm.getRawValue();
+    const profileData: UserProfile = {
+      firstName: formValues.firstName || '',
+      lastName: formValues.lastName || '',
+      email: formValues.email || '',
+      phone: formValues.phone || '',
+      bio: formValues.bio || ''
+    };
+    
+    this.profileService.saveUserProfile(profileData)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        next: () => {
+          this.lastUpdated = new Date();
+          this.snackbarService.success('Profile updated successfully!');
+          this.toggleEditMode();
+          this.generateUserInitials();
+        },
+        error: (error) => {
+          this.snackbarService.error('Failed to update profile. Please try again.');
+          console.error('Profile update error:', error);
+        }
+      });
   }
   
   cancelEdit(): void {
@@ -68,16 +100,23 @@ export class ProfileComponent implements OnInit {
   }
   
   private loadUserProfile(): void {
-    // Mock user data - in a real app, this would come from a service
-    const userData = {
-      firstName: this.authService.isAdmin() ? 'Admin' : 'User',
-      lastName: 'Account',
-      email: this.authService.isAdmin() ? 'admin@example.com' : 'user@example.com',
-      phone: '+1 (555) 123-4567',
-      bio: 'This is a mock user profile for demonstration purposes. In a real application, this information would be loaded from a user profile service or API.'
-    };
+    this.loading = true;
     
-    this.profileForm.patchValue(userData);
+    this.profileService.getUserProfile()
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        next: (userData: UserProfile) => {
+          this.profileForm.patchValue(userData);
+          this.generateUserInitials();
+        },
+        error: (error) => {
+          this.snackbarService.error('Failed to load profile data. Please refresh the page.');
+          console.error('Profile load error:', error);
+        }
+      });
   }
   
   private generateUserInitials(): void {
@@ -112,7 +151,7 @@ export class ProfileComponent implements OnInit {
     let color = '#';
     for (let i = 0; i < 3; i++) {
       const value = (hash >> (i * 8)) & 0xFF;
-      color += ('00' + value.toString(16)).substr(-2);
+      color += ('00' + value.toString(16)).substring(-2);
     }
     
     // Make sure the color is not too light for white text
@@ -164,7 +203,9 @@ export class ProfileComponent implements OnInit {
   }
   
   get fullName(): string {
-    return `${this.profileForm.get('firstName')?.value || ''} ${this.profileForm.get('lastName')?.value || ''}`.trim();
+    const firstName = this.profileForm.get('firstName')?.value || '';
+    const lastName = this.profileForm.get('lastName')?.value || '';
+    return `${firstName} ${lastName}`.trim();
   }
   
   get formControls() {

@@ -8,7 +8,7 @@
     <button 
       mat-raised-button 
       color="primary" 
-      *ngIf="!isEditing"
+      *ngIf="!isEditing && !loading"
       (click)="toggleEditMode()"
       aria-label="Edit profile">
       <mat-icon>edit</mat-icon>
@@ -18,11 +18,13 @@
 
   <div class="profile-content">
     <mat-card class="profile-card">
+      <mat-progress-bar *ngIf="loading" mode="indeterminate" aria-label="Loading profile data"></mat-progress-bar>
+      
       <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
         <!-- Profile Header -->
         <div class="profile-header">
           <div class="avatar-container" [class.editable]="isEditing">
-            <div class="avatar-circle" [style.background-color]="avatarColor" aria-hidden="true">
+            <div class="avatar-circle" [style.backgroundColor]="avatarColor" aria-hidden="true">
               <span>{{ userInitials }}</span>
             </div>
             <button 
@@ -34,7 +36,8 @@
               aria-label="Change profile picture">
               <mat-icon>photo_camera</mat-icon>
             </button>
-          </div>          <div class="profile-title">
+          </div>
+          <div class="profile-title">
             <h2>{{ fullName || 'Your Profile' }}</h2>
             <div class="role-badge">
               <app-user-role-badge [role]="authService.getUserRole()"></app-user-role-badge>
@@ -111,6 +114,7 @@
             mat-stroked-button 
             type="button" 
             (click)="cancelEdit()"
+            [disabled]="loading"
             aria-label="Cancel editing">
             <mat-icon>close</mat-icon> Cancel
           </button>
@@ -118,9 +122,10 @@
             mat-raised-button 
             color="primary" 
             type="submit" 
-            [disabled]="profileForm.invalid || profileForm.pristine"
+            [disabled]="profileForm.invalid || profileForm.pristine || loading"
             aria-label="Save profile changes">
-            <mat-icon>save</mat-icon> Save Changes
+            <mat-icon>{{ loading ? 'hourglass_empty' : 'save' }}</mat-icon> 
+            {{ loading ? 'Saving...' : 'Save Changes' }}
           </button>
         </div>
       </form>
