@@ -4,6 +4,13 @@
   align-items: center;
   min-height: calc(100vh - 128px); // Adjust for header/footer
   padding: 2rem;
+  // Add animation to ensure immediate visibility
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
 }
 
 .login-card {
@@ -12,6 +19,13 @@
   padding: 1rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  // Add a subtle scale animation
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.98); }
+  to { transform: scale(1); }
 }
 
 .login-form {

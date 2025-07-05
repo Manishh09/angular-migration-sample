@@ -36,6 +36,18 @@ body {
     scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
 }
 
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.95;
+    }
+}
+
 /* SnackBar styling */
 .success-snackbar {
     background-color: #43a047;
@@ -45,6 +57,25 @@ body {
     .mat-simple-snackbar-action {
         color: white;
     }
+}
+
+/* Custom logout snackbar styling */
+.logout-snackbar {
+    background-color: #3949ab;
+    color: white;
+    font-weight: 500;
+    opacity: 0.95;
+    border-radius: 8px !important;
+    min-width: 200px !important;
+    max-width: 300px !important;
+    
+    .mat-simple-snackbar-action {
+        color: white;
+        font-weight: bold;
+    }
+    
+    /* Animation to avoid disrupting the UI */
+    animation: slideIn 0.3s ease-out;
 }
 
 .error-snackbar {

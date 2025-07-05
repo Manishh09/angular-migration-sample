@@ -90,6 +90,12 @@
   padding: 8px 0;
 }
 
+// Spinner style for logout button
+.logout-spinner {
+  display: inline-block;
+  margin-left: 8px;
+}
+
 // Keyboard navigation focus indicator
 :host ::ng-deep .mat-menu-item:focus-visible {
   background-color: rgba(0, 0, 0, 0.04);

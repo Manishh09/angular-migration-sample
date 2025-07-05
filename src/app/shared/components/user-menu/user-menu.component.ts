@@ -25,6 +25,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class UserMenuComponent implements OnInit, OnChanges {
   @Output() logout = new EventEmitter<void>();
   @Input() username = '';
+  @Input() isLoggingOut = false;
   
   isMenuOpen = false;
   userInitials = '';
@@ -53,8 +54,11 @@ export class UserMenuComponent implements OnInit, OnChanges {
   }
 
   onLogout(): void {
-    this.logout.emit();
-    this.closeMenu();
+    // Close menu immediately, then emit logout
+    this.isMenuOpen = false;
+    setTimeout(() => {
+      this.logout.emit();
+    }, 0);
   }
 
   navigateTo(route: string): void {

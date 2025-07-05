@@ -54,9 +54,10 @@
         </button>
         
         <!-- Logout option (mandatory) -->
-        <button mat-menu-item aria-label="Log out" (click)="onLogout()">
+        <button mat-menu-item aria-label="Log out" (click)="onLogout()" [disabled]="isLoggingOut">
           <mat-icon>logout</mat-icon>
           <span>Logout</span>
+          <mat-spinner *ngIf="isLoggingOut" diameter="16" class="logout-spinner"></mat-spinner>
         </button>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   username = 'Demo User';
+  isLoggingOut = false;
   private authSubscription?: Subscription;
 
   constructor(
@@ -47,8 +48,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.snackbarService.success('You have been logged out successfully');
-    this.router.navigate(['/auth/login']);
+    // Prevent multiple logout attempts
+    if (this.isLoggingOut) {
+      return;
+    }
+    
+    this.isLoggingOut = true;
+    
+    // Clean up subscription to prevent callbacks during logout
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+      this.authSubscription = undefined;
+    }
+    
+    // First perform the logout operation to clear auth data
+    this.authService.logout().then(() => {
+      // Then immediately navigate to login page
+      this.router.navigate(['/auth/login']).then(() => {
+        // After navigation is complete, show a subtle notification
+        // The setTimeout ensures the notification appears after the page has rendered
+        setTimeout(() => {
+          this.snackbarService.success('You have been logged out successfully', 'OK', { 
+            duration:1000,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'end',
+            panelClass: ['logout-snackbar']
+          }).subscribe(() => {
+            this.isLoggingOut = false;
+          });
+        }, 0);
+      });
+    });
   }
 }

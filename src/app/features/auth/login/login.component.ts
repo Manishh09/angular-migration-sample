@@ -28,10 +28,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Redirect if already logged in
+    // Only redirect if already logged in
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
     }
+    
+    // Pre-fill test credentials for faster testing
+    this.loginForm.patchValue({
+      username: 'test',
+      password: 'password'
+    });
   }
 
   onSubmit(): void {

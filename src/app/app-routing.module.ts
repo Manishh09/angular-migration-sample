@@ -6,7 +6,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
@@ -25,6 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
   },
   {
@@ -42,7 +44,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload',  // Allows navigation to the same URL
+    urlUpdateStrategy: 'eager',     // Update URL immediately
+    useHash: false,                 // Use HTML5 history API
+    initialNavigation: 'enabledBlocking', // Immediate navigation
+    paramsInheritanceStrategy: 'always'   // Always inherit route params
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

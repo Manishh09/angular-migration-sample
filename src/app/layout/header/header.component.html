@@ -36,6 +36,7 @@
     <ng-container *ngIf="authService.isLoggedIn()">
       <app-user-menu 
         [username]="username"
+        [isLoggingOut]="isLoggingOut"
         (logout)="logout()">
       </app-user-menu>
     </ng-container>
@@ -73,9 +74,10 @@
       </a>
     </ng-container>
     <ng-template #mobileLogoutButton>
-      <button mat-menu-item (click)="logout()">
+      <button mat-menu-item (click)="logout()" [disabled]="isLoggingOut">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>
+        <mat-spinner *ngIf="isLoggingOut" diameter="16" style="display: inline-block; margin-left: 8px;"></mat-spinner>
       </button>
     </ng-template>
   </mat-menu>

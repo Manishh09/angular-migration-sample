@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -15,8 +16,9 @@ export class AuthService {
   private token: string | null = null;
   private storageTokenKey = 'auth_token';
   private storageRoleKey = 'user_role';
+  private loggingOut = false;
 
-  constructor() {
+  constructor(private router: Router) {
     // Initialize from localStorage if available
     this.token = localStorage.getItem(this.storageTokenKey);
     // Emit initial auth state
@@ -60,12 +62,25 @@ export class AuthService {
     return false;
   }
 
-  logout(): void {
+  logout(): Promise<boolean> {
+    if (this.loggingOut) {
+      // Return existing promise if already logging out
+      return Promise.resolve(false);
+    }
+    
+    this.loggingOut = true;
+    
+    // Clear auth data immediately
     this.token = null;
     localStorage.removeItem(this.storageTokenKey);
     localStorage.removeItem(this.storageRoleKey);
     
     // Notify subscribers that auth state changed
     this.authChange.next(false);
+    
+    // Just resolve the promise immediately without navigation
+    // The calling component will handle navigation
+    this.loggingOut = false;
+    return Promise.resolve(true);
   }
 }
