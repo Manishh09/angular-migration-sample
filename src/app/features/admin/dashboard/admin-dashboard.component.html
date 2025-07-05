@@ -54,7 +54,7 @@
   </div>  <ng-template #loadingTemplate>
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p *ngIf="!loading" class="error-message">Could not load dashboard data</p>
+      <p [class.visible]="!loading" class="error-message">Could not load dashboard data</p>
     </div>
   </ng-template>
 </div>

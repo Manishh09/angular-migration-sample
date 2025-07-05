@@ -22,9 +22,9 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
 export class AdminAuthGuard implements CanActivate, CanLoad {
   
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private snackbarService: SnackbarService
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly snackbarService: SnackbarService
   ) {}
 
   canActivate(

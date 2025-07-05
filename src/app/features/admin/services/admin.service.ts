@@ -3,6 +3,9 @@ import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { DashboardStats, AdminSettings } from '../models/dashboard-stats.model';
 
+/**
+ * Service responsible for admin-related functionality
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +13,10 @@ export class AdminService {
 
   constructor() { }
 
+  /**
+   * Retrieves dashboard statistics
+   * @returns Observable with dashboard statistics
+   */
   getDashboardStats(): Observable<DashboardStats> {
     // Mock data - in a real app, this would come from an API
     const mockStats: DashboardStats = {
@@ -22,7 +29,12 @@ export class AdminService {
     return of(mockStats).pipe(delay(800));
   }
 
-  saveSettings(settings: AdminSettings): Observable<any> {
+  /**
+   * Saves admin settings
+   * @param settings The settings to save
+   * @returns Observable with the operation result
+   */
+  saveSettings(settings: AdminSettings): Observable<{success: boolean, message: string}> {
     // Mock API call - in a real app, this would be an HTTP request
     console.log('Saving admin settings:', settings);
     

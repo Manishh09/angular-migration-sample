@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../services/admin.service';
 import { Observable, catchError, finalize, of, Subject, takeUntil } from 'rxjs';
 import { DashboardStats } from '../models/dashboard-stats.model';
@@ -7,7 +7,8 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  styleUrls: ['./admin-dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {
   dashboardStats$!: Observable<DashboardStats>;
@@ -25,7 +26,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly adminService: AdminService,
-    private readonly snackbarService: SnackbarService
+    private readonly snackbarService: SnackbarService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
   ngOnInit(): void {
     this.loadDashboardStats();
@@ -48,6 +50,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       }),
       finalize(() => {
         this.loading = false;
+        this.cdr.markForCheck();
       })
     );
   }

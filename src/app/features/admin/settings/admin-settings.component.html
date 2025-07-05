@@ -9,10 +9,11 @@
           <div class="form-field-container">
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Application Name</mat-label>
-              <input matInput formControlName="appName" placeholder="Enter application name">              <mat-error *ngIf="settingsForm.get('appName')?.hasError('required')">
+              <input matInput formControlName="appName" placeholder="Enter application name">
+              <mat-error *ngIf="settingsForm.get('appName')?.errors?.['required']">
                 Application name is required
               </mat-error>
-              <mat-error *ngIf="settingsForm.get('appName')?.hasError('minlength')">
+              <mat-error *ngIf="settingsForm.get('appName')?.errors?.['minlength']">
                 Application name must be at least 3 characters
               </mat-error>
             </mat-form-field>
@@ -22,10 +23,11 @@
           <div class="form-field-container">
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Admin Email</mat-label>
-              <input matInput formControlName="adminEmail" placeholder="Enter admin email" type="email">              <mat-error *ngIf="settingsForm.get('adminEmail')?.hasError('required')">
+              <input matInput formControlName="adminEmail" placeholder="Enter admin email" type="email">
+              <mat-error *ngIf="settingsForm.get('adminEmail')?.errors?.['required']">
                 Admin email is required
               </mat-error>
-              <mat-error *ngIf="settingsForm.get('adminEmail')?.hasError('email')">
+              <mat-error *ngIf="settingsForm.get('adminEmail')?.errors?.['email']">
                 Please enter a valid email address
               </mat-error>
             </mat-form-field>
@@ -44,10 +46,8 @@
             mat-raised-button 
             color="primary" 
             type="submit" 
-            [disabled]="settingsForm.invalid || isSaving"
-            appDebounceClick 
-            [debounceTime]="300">
-            <span *ngIf="!isSaving">Save Settings</span>
+            [disabled]="settingsForm.invalid || isSaving">
+            <ng-container *ngIf="!isSaving">Save Settings</ng-container>
             <mat-spinner *ngIf="isSaving" diameter="24"></mat-spinner>
           </button>
         </mat-card-actions>
