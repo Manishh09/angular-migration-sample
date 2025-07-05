@@ -9,12 +9,11 @@
     
     <mat-card-content>
       <div class="user-profile-section">
-        <div class="user-avatar">
-          <div class="avatar-circle" matTooltip="User avatar">
+        <div class="user-avatar">          <div class="avatar-circle" matTooltip="User avatar">
             {{ user.name.charAt(0) }}{{ (user.name.split(' ')[1] || '').charAt(0) }}
           </div>
           <div class="user-role">
-            <span class="role-chip" [ngClass]="user.role.toLowerCase()">{{ user.role }}</span>
+            <app-user-role-badge [role]="user.role"></app-user-role-badge>
           </div>
         </div>
         

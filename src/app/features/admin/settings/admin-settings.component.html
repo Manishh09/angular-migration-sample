@@ -1,0 +1,57 @@
+<div class="admin-settings-container">
+  <h1 class="settings-title">Admin Settings</h1>
+
+  <div class="settings-form-container">
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+      <mat-card>
+        <mat-card-content>
+          <!-- App Name Field -->
+          <div class="form-field-container">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Application Name</mat-label>
+              <input matInput formControlName="appName" placeholder="Enter application name">              <mat-error *ngIf="settingsForm.get('appName')?.hasError('required')">
+                Application name is required
+              </mat-error>
+              <mat-error *ngIf="settingsForm.get('appName')?.hasError('minlength')">
+                Application name must be at least 3 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Admin Email Field -->
+          <div class="form-field-container">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Admin Email</mat-label>
+              <input matInput formControlName="adminEmail" placeholder="Enter admin email" type="email">              <mat-error *ngIf="settingsForm.get('adminEmail')?.hasError('required')">
+                Admin email is required
+              </mat-error>
+              <mat-error *ngIf="settingsForm.get('adminEmail')?.hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Theme Toggle -->
+          <div class="form-field-container theme-toggle">
+            <mat-slide-toggle formControlName="darkTheme" color="primary">
+              Enable Dark Theme
+            </mat-slide-toggle>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="settingsForm.invalid || isSaving"
+            appDebounceClick 
+            [debounceTime]="300">
+            <span *ngIf="!isSaving">Save Settings</span>
+            <mat-spinner *ngIf="isSaving" diameter="24"></mat-spinner>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>

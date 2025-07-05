@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const matModules = [
   CommonModule,
@@ -40,7 +41,8 @@ const matModules = [
   MatDividerModule,
   MatTabsModule,
   MatSelectModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatGridListModule
 ]
 @NgModule({
   declarations: [],

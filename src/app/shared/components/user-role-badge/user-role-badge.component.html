@@ -1,0 +1,14 @@
+<div class="role-badge-wrapper">
+  <mat-chip 
+    [color]="badgeColor" 
+    selected
+    disableRipple
+    [matTooltip]="getRoleDescription()"
+    matTooltipPosition="above"
+    [attr.aria-label]="'User role: ' + (role || 'Unknown')"
+    class="role-badge"
+    [class.compact]="compact">
+    <mat-icon *ngIf="roleIcon" class="role-icon" aria-hidden="true">{{roleIcon}}</mat-icon>
+    <span class="role-text">{{ role || 'Unknown' }}</span>
+  </mat-chip>
+</div>

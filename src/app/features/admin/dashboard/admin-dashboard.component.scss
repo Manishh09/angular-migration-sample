@@ -1,0 +1,70 @@
+.admin-dashboard-container {
+  padding: 24px;
+}
+
+.dashboard-title {
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 24px;
+}
+
+.dashboard-content {
+  margin-bottom: 24px;
+}
+
+.dashboard-card {
+  width: 90%;
+  height: 85%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.card-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  
+  mat-icon {
+    color: white;
+  }
+}
+
+.users-icon {
+  background-color: #3f51b5; // Primary color
+}
+
+.sessions-icon {
+  background-color: #4caf50; // Green
+}
+
+.errors-icon {
+  background-color: #f44336; // Red
+}
+
+.stat-number {
+  font-size: 42px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  
+  .error-message {
+    margin-top: 16px;
+    color: #f44336; // Red
+    font-size: 16px;
+  }
+}

@@ -4,6 +4,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { MaterialModule } from '../../material/material.module';
+import { SharedModule } from '../../shared/shared.module';
 import { UserService } from './services/user.service';
 
 @NgModule({
@@ -14,7 +15,8 @@ import { UserService } from './services/user.service';
   imports: [
     CommonModule,
     UserRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   providers: [UserService]
 })

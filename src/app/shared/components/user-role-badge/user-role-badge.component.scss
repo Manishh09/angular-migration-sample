@@ -1,0 +1,200 @@
+:host {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  
+  /* Proper wrapper for chip positioning */
+  .role-badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 1px; /* Prevent clipping */
+    overflow: visible;
+  }
+  
+  /* Ensure proper alignment and no clipping */
+  .mat-chip.mat-standard-chip {
+    margin: 0;
+    overflow: visible;
+    position: relative;
+    box-sizing: border-box;
+  }
+}
+
+mat-chip {
+  font-weight: 500;
+  text-transform: capitalize;
+  min-height: 26px;
+  height: auto;
+  border-radius: 16px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 4px 12px;
+  letter-spacing: 0.25px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+  overflow: visible !important;
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+    cursor: default;
+    filter: brightness(1.05);
+  }
+  
+  &[color="warn"] {
+    background-color: rgba(244, 67, 54, 0.9) !important;
+    color: white !important;
+  }
+  
+  &[color="primary"] {
+    background-color: rgba(63, 81, 181, 0.9) !important;
+    color: white !important;
+  }
+  
+  &[color="accent"] {
+    background-color: rgba(76, 175, 80, 0.9) !important;
+    color: white !important;
+  }
+  
+  &:not([color]) {
+    background-color: rgba(158, 158, 158, 0.9) !important;
+    color: white !important;
+  }
+  
+  .role-icon {
+    height: 14px;
+    width: 14px;
+    font-size: 14px;
+    margin-right: 6px;
+    display: inline-flex;
+    vertical-align: middle;
+    opacity: 0.95;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .role-text {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1.2;
+  }
+  
+  // Compact mode
+  &.compact {
+    min-height: 22px;
+    padding: 2px 8px;
+    font-size: 11px;
+    
+    .role-icon {
+      height: 12px;
+      width: 12px;
+      font-size: 12px;
+      margin-right: 4px;
+    }
+  }
+  
+  // Add subtle inner border for better definition - with improved positioning
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  // Completely disable any after elements that might cause issues
+  &::after {
+    display: none !important;
+  }
+}
+
+/* Complete Angular Material chip fixes */
+:host ::ng-deep {
+  /* Ensure border radius is applied consistently */
+  .mat-chip-ripple {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* Fix for Angular Material 14 chips */
+  .mat-chip {
+    &.mat-standard-chip {
+      /* Base chip styles */
+      position: relative !important;
+      overflow: visible !important;
+      border-radius: 16px !important;
+      
+      /* Reset problematic Material pseudo-elements */
+      &::before {
+        display: none !important;
+      }
+      
+      /* Ensure black background doesn't appear */
+      &::after {
+        display: none !important;
+      }
+      
+      /* Enhanced color-specific styles with higher specificity */
+      &.mat-chip-selected {
+        &.mat-warn {
+          background-color: rgba(244, 67, 54, 0.9) !important;
+          color: white !important;
+          box-shadow: 0 1px 3px rgba(244, 67, 54, 0.3) !important;
+        }
+        
+        &.mat-primary {
+          background-color: rgba(63, 81, 181, 0.9) !important;
+          color: white !important;
+          box-shadow: 0 1px 3px rgba(63, 81, 181, 0.3) !important;
+        }
+        
+        &.mat-accent {
+          background-color: rgba(76, 175, 80, 0.9) !important;
+          color: white !important;
+          box-shadow: 0 1px 3px rgba(76, 175, 80, 0.3) !important;
+        }
+      }
+      
+      &:not(.mat-chip-selected) {
+        background-color: rgba(158, 158, 158, 0.9) !important;
+        color: white !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+      }
+    }
+  }
+
+  /* Complete fix for ripple animation */
+  .mat-ripple {
+    display: none !important;
+  }
+  
+  .mat-ripple-element {
+    display: none !important;
+    background-color: transparent !important;
+    opacity: 0 !important;
+  }
+}
+
+/* High contrast mode adjustments for accessibility */
+@media screen and (forced-colors: active) {
+  mat-chip {
+    border: 1px solid transparent;
+    
+    &::before, &::after {
+      display: none;
+    }
+  }
+}

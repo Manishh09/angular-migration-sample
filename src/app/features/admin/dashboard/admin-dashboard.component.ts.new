@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../services/admin.service';
+import { Observable, catchError, finalize, of } from 'rxjs';
+import { DashboardStats } from '../models/dashboard-stats.model';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+
+@Component({
+  selector: 'app-admin-dashboard',
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.scss']
+})
+export class AdminDashboardComponent implements OnInit {
+  dashboardStats$!: Observable<DashboardStats>;
+  
+  // For the responsive grid layout
+  breakpoint!: number;
+  loading = false;
+
+  constructor(
+    private adminService: AdminService,
+    private snackbarService: SnackbarService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadDashboardStats();
+    this.setGridBreakpoint(window.innerWidth);
+  }
+
+  loadDashboardStats(): void {
+    this.loading = true;
+    this.dashboardStats$ = this.adminService.getDashboardStats().pipe(
+      catchError(error => {
+        this.snackbarService.error('Failed to load dashboard statistics');
+        return of({ totalUsers: 0, activeSessions: 0, errorsToday: 0 });
+      }),
+      finalize(() => {
+        this.loading = false;
+      })
+    );
+  }
+
+  onResize(event: any): void {
+    if (event && event.target) {
+      this.setGridBreakpoint(event.target.innerWidth);
+    }
+  }
+
+  private setGridBreakpoint(width: number): void {
+    if (width <= 600) {
+      this.breakpoint = 1; // 1 card per row on small screens
+    } else if (width <= 960) {
+      this.breakpoint = 2; // 2 cards per row on medium screens
+    } else {
+      this.breakpoint = 3; // 3 cards per row on large screens
+    }
+  }
+}

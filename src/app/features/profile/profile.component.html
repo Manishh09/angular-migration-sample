@@ -34,11 +34,10 @@
               aria-label="Change profile picture">
               <mat-icon>photo_camera</mat-icon>
             </button>
-          </div>
-          <div class="profile-title">
+          </div>          <div class="profile-title">
             <h2>{{ fullName || 'Your Profile' }}</h2>
-            <div class="role-badge" [class.admin]="authService.isAdmin()">
-              {{ authService.getUserRole() }}
+            <div class="role-badge">
+              <app-user-role-badge [role]="authService.getUserRole()"></app-user-role-badge>
             </div>
             <div class="account-status" *ngIf="authService.isAdmin()">
               <mat-icon class="verified-icon">verified</mat-icon> Verified Account

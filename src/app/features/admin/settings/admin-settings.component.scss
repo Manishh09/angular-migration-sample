@@ -1,0 +1,45 @@
+.admin-settings-container {
+  padding: 24px;
+}
+
+.settings-title {
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 24px;
+}
+
+.settings-form-container {
+  max-width: 800px;
+}
+
+.form-field-container {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.theme-toggle {
+  margin-top: 16px;
+}
+
+mat-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-actions {
+  padding: 16px;
+}
+
+button[type="submit"] {
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  
+  mat-spinner {
+    margin: 0 auto;
+  }
+}

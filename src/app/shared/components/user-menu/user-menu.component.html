@@ -28,10 +28,11 @@
       <div class="user-info">
         <div class="avatar-large">
           <span>{{ userInitials }}</span>
-        </div>
-        <div class="user-details">
+        </div>        <div class="user-details">
           <div class="username">{{ username || 'User' }}</div>
-          <div class="user-role">{{ authService.getUserRole() }}</div>
+          <div class="user-role">
+            <app-user-role-badge [role]="authService.getUserRole()"></app-user-role-badge>
+          </div>
         </div>
       </div>
       
