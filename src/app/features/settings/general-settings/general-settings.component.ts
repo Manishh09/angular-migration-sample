@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SettingsService, GeneralSettings, DEFAULT_GENERAL_SETTINGS } from '../services/settings.service';
@@ -18,7 +18,8 @@ export class GeneralSettingsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -38,13 +39,24 @@ export class GeneralSettingsComponent implements OnInit, OnDestroy {
       dateFormat: [DEFAULT_GENERAL_SETTINGS.dateFormat, Validators.required],
       theme: [DEFAULT_GENERAL_SETTINGS.theme, Validators.required]
     });
+
+    // Subscribe to form value changes to update the service
+    this.generalForm.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(values => {
+        // Only update if the form is valid
+        if (this.generalForm.valid) {
+          this.settingsService.updateGeneralSettings(values as GeneralSettings);
+        }
+      });
   }
 
   private loadSettings(): void {
     this.settingsService.getGeneralSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe(settings => {
-        this.generalForm.patchValue(settings);
+        this.generalForm.patchValue(settings, { emitEvent: false });
+        this.cdr.markForCheck();
       });
   }
 

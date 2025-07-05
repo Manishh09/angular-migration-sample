@@ -48,4 +48,23 @@
       
     </mat-tab-group>
   </mat-card>
+  
+  <!-- Global Save Button (Fixed) -->
+  <div class="global-save-container" *ngIf="hasPendingChanges">
+    <div class="global-save-content">
+      <div class="save-message">
+        <mat-icon color="warn">info</mat-icon>
+        <span>You have unsaved changes</span>
+      </div>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        [disabled]="savingInProgress"
+        (click)="saveAllSettings()">
+        <mat-icon *ngIf="!savingInProgress">save</mat-icon>
+        <mat-spinner *ngIf="savingInProgress" diameter="20" color="accent"></mat-spinner>
+        <span>{{ savingInProgress ? 'Saving...' : 'Save All Changes' }}</span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import './app/shared/styles/snackbar';
+@import './app/shared/styles/dialog-styles';
 
 /* Basic reset and body styles */
 html,
@@ -7,6 +8,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    padding-bottom: 56px; /* Add padding for the fixed footer */
     overflow: hidden;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }

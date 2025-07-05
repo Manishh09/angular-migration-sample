@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SettingsService, NotificationSettings, DEFAULT_NOTIFICATION_SETTINGS } from '../services/settings.service';
@@ -18,7 +18,8 @@ export class NotificationSettingsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -38,13 +39,24 @@ export class NotificationSettingsComponent implements OnInit, OnDestroy {
       marketingEmails: [DEFAULT_NOTIFICATION_SETTINGS.marketingEmails],
       activitySummary: [DEFAULT_NOTIFICATION_SETTINGS.activitySummary]
     });
+
+    // Subscribe to form value changes to update the service
+    this.notificationsForm.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(values => {
+        // Only update if the form is valid
+        if (this.notificationsForm.valid) {
+          this.settingsService.updateNotificationSettings(values as NotificationSettings);
+        }
+      });
   }
 
   private loadSettings(): void {
     this.settingsService.getNotificationSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe(settings => {
-        this.notificationsForm.patchValue(settings);
+        this.notificationsForm.patchValue(settings, { emitEvent: false });
+        this.cdr.markForCheck();
       });
   }
 

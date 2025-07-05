@@ -9,6 +9,9 @@ import { SecuritySettingsComponent } from './security-settings/security-settings
 import { NotificationSettingsComponent } from './notification-settings/notification-settings.component';
 import { SettingsComponent } from './settings.component';
 import { SettingsService } from './services/settings.service';
+import { SaveSettingsDialogComponent } from './components/save-settings-dialog/save-settings-dialog.component';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 /**
  * Settings Module - Handles all user settings functionality
@@ -17,13 +20,17 @@ import { SettingsService } from './services/settings.service';
  * - General preferences (language, theme, etc.)
  * - Security settings (password management)
  * - Notification preferences
+ * - Automatic detection of unsaved changes
+ * - Global save functionality
  */
 @NgModule({
   declarations: [
     SettingsComponent,
     GeneralSettingsComponent,
     SecuritySettingsComponent,
-    NotificationSettingsComponent
+    NotificationSettingsComponent,
+    SaveSettingsDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -33,8 +40,8 @@ import { SettingsService } from './services/settings.service';
     SharedModule
   ],
   providers: [
-    // Service is provided in root, this is just for documentation
-    // SettingsService
+    SettingsService,
+    UnsavedChangesGuard
   ]
 })
 export class SettingsModule { }

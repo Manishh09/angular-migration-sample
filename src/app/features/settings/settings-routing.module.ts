@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsComponent } from './settings.component';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: SettingsComponent
+    component: SettingsComponent,
+    canDeactivate: [UnsavedChangesGuard]
   }
 ];
 

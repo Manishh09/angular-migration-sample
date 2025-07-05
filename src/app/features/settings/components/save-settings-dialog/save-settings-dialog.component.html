@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Save Changes</h2>
+<mat-dialog-content>
+  <p>You have unsaved changes in the following sections:</p>
+  <ul class="changed-sections">
+    <li *ngFor="let section of data.changedSections">
+      <mat-icon class="check-icon">check_circle</mat-icon>
+      <span>{{ section }}</span>
+    </li>
+  </ul>
+  <p class="confirm-text">Would you like to save these changes?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="discard-button" (click)="onCancel()">Discard</button>
+  <button mat-raised-button color="primary" class="save-button" (click)="onSave()">
+    <mat-icon>save</mat-icon>
+    Save Changes
+  </button>
+</mat-dialog-actions>

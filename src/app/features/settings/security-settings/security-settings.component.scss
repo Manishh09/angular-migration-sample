@@ -21,3 +21,13 @@
     }
   }
 }
+
+// Ensure form actions are visible with the global save button
+.form-actions {
+  position: relative;
+  z-index: 5; // Higher z-index to ensure buttons are above everything
+  
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
+}

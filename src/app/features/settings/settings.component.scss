@@ -111,7 +111,7 @@
   .tab-content {
     padding: 1.5rem;
     overflow: auto;
-    max-height: calc(100vh - 12rem);
+    max-height: calc(100vh - 22rem);
   }
   
   .mat-tab-body-wrapper {
@@ -124,7 +124,7 @@
 }
 
 .settings-section {
-  margin-bottom: 2rem;
+ // margin-bottom: 2rem;
 
   h2 {
     font-size: 1.25rem;
@@ -333,5 +333,56 @@
   
   mat-icon {
     margin-right: 0.5rem;
+  }
+}
+
+/* Global Save Button Styles */
+.global-save-container {
+  position: fixed;
+  bottom: 56px; // Position above footer (match footer height)
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9; // High z-index but below action buttons
+  padding: 0.75rem 1rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: slide-up 0.4s ease;
+  
+  .global-save-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .save-message {
+      display: flex;
+      align-items: center;
+      
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+    }
+    
+    button {
+      display: flex;
+      align-items: center;
+      
+      mat-icon, mat-spinner {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

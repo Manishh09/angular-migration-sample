@@ -1,0 +1,25 @@
+/* Save Settings Dialog styling */
+.mat-mdc-dialog-container {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.mat-dialog-title {
+    margin-bottom: 10px !important;
+    font-weight: 500 !important;
+    font-size: 1.5rem !important;
+}
+
+.mat-dialog-content {
+    margin: 0 !important;
+    padding: 0 24px !important;
+    max-height: none !important;
+}
+
+.mat-dialog-actions {
+    padding: 16px 24px !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+}

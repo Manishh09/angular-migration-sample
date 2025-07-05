@@ -22,6 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+import { MatRippleModule } from '@angular/material/core';
+
 const matModules = [
   CommonModule,
   MatToolbarModule,
@@ -44,7 +46,9 @@ const matModules = [
   MatTabsModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatGridListModule
+  MatGridListModule,
+  MatDialogModule,
+  MatRippleModule
 ]
 @NgModule({
   declarations: [],
