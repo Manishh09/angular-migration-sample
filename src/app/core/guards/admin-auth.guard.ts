@@ -11,7 +11,11 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
+/**
+ * Guard that protects routes requiring admin authentication
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +23,8 @@ export class AdminAuthGuard implements CanActivate, CanLoad {
   
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {}
 
   canActivate(
@@ -36,16 +41,14 @@ export class AdminAuthGuard implements CanActivate, CanLoad {
     return this.checkAdminAccess();
   }
 
-  private checkAdminAccess(): boolean {
+  private checkAdminAccess(): boolean | UrlTree {
     // Check if user is both logged in and has admin role
     if (this.authService.isLoggedIn() && this.authService.isAdmin()) {
       return true;
     }
     
-    // If not allowed, prevent route activation
-    // You can optionally redirect here if needed
-    // this.router.navigate(['/login']); // Uncomment to enable redirect
-    
-    return false;
+    // If not allowed, show a message and redirect to home
+    this.snackbarService.error('You need admin privileges to access this area');
+    return this.router.createUrlTree(['/home']);
   }
 }

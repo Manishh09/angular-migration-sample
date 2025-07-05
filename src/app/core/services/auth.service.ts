@@ -8,13 +8,26 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export type UserRoleType = 'Guest' | 'Admin';
 
 /**
+ * Authentication service interface
+ */
+export interface IAuthService {
+  readonly authChange$: Observable<boolean>;
+  getToken(): string | null;
+  isLoggedIn(): boolean;
+  getUserRole(): UserRoleType;
+  isAdmin(): boolean;
+  login(username: string, password: string): boolean;
+  logout(): Promise<boolean>;
+}
+
+/**
  * Service responsible for authentication-related operations
  */
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  // Static roles
+export class AuthService implements IAuthService {
+  // Static roles as readonly constants
   static readonly ROLE_GUEST: UserRoleType = 'Guest';
   static readonly ROLE_ADMIN: UserRoleType = 'Admin';
   

@@ -1,18 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+
+interface LoginForm {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   hidePassword = true;
-  isLoading = false;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  readonly isLoading$ = this.loadingSubject.asObservable();
 
   constructor(
     private fb: FormBuilder,
@@ -21,9 +30,9 @@ export class LoginComponent implements OnInit {
     private snackbarService: SnackbarService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      rememberMe: [false]
+      username: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+      password: new FormControl('', { validators: [Validators.required, Validators.minLength(4)], nonNullable: true }),
+      rememberMe: new FormControl(false, { nonNullable: true })
     });
   }
 
@@ -45,12 +54,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-    const { username, password } = this.loginForm.value;
+    this.loadingSubject.next(true);
+    const { username, password } = this.loginForm.value as LoginForm;
 
     setTimeout(() => {
       const success = this.authService.login(username, password);
-      this.isLoading = false;
+      this.loadingSubject.next(false);
 
       if (success) {
         this.snackbarService.success(`Welcome, ${username}! You are now logged in as ${this.authService.getUserRole()}`);
@@ -60,10 +69,5 @@ export class LoginComponent implements OnInit {
         this.loginForm.get('password')?.reset();
       }
     }, 1000); // Simulate network delay
-  }
-
-  // Helper getter for form controls
-  get f() {
-    return this.loginForm.controls;
   }
 }
