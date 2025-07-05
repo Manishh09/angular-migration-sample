@@ -4,10 +4,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
-import { AdminAuthGuard } from './guards/admin-auth.guard';
 
-
-
+/**
+ * Core module for application-wide singleton services and providers.
+ * This module should be imported only once in the AppModule.
+ */
 @NgModule({
   declarations: [],
   imports: [
@@ -16,8 +17,8 @@ import { AdminAuthGuard } from './guards/admin-auth.guard';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor, // 🔐 This interceptor will be used to attach auth tokens or handle HTTP request logging/errors.
-      multi: true // `multi: true` allows multiple interceptors to be registered.
+      useClass: AuthInterceptor,
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -32,7 +33,10 @@ import { AdminAuthGuard } from './guards/admin-auth.guard';
   ]
 })
 export class CoreModule { 
-  // Prevent re-import of CoreModule
+  /**
+   * Prevents CoreModule from being imported more than once
+   * @param parentModule - Reference to the parent CoreModule if it exists
+   */
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule.');

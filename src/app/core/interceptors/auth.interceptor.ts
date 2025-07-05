@@ -8,26 +8,30 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
+/**
+ * Interceptor that adds authentication tokens to outgoing HTTP requests
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
+  /**
+   * Intercepts HTTP requests and adds authentication token if available
+   * @param req - The outgoing request
+   * @param next - The next handler in the chain
+   * @returns Observable of the HTTP event
+   */
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.authService.getToken();
 
     if (token) {
-      // Clone the request and set the new header in one go
-      // This is to avoid mutating the original request
-      // which is immutable in Angular's HttpClient
-      // and to ensure that the Authorization header is set correctly.
-      // This is a common pattern in Angular interceptors.
-       
-      const clonedReq = req.clone({
+      // Clone the request and add the authorization header
+      const authReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
-      return next.handle(clonedReq);
+      return next.handle(authReq);
     }
 
     return next.handle(req);

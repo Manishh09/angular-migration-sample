@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.setUserName();
     
     // Subscribe to auth changes
-    this.authSubscription = this.authService.authChange.subscribe(() => {
+    this.authSubscription = this.authService.authChange$.subscribe(() => {
       this.setUserName();
     });
   }
