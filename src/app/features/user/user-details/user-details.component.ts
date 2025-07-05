@@ -1,11 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.scss']
+  styleUrls: ['./user-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserDetailsComponent {
   constructor(

@@ -1,59 +1,76 @@
 <div class="user-list-container">
   <div class="user-list-header">
     <h2>User Management</h2>
-    <mat-form-field class="filter-field">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search users" #input>
-    </mat-form-field>
-  </div>
-
-  <div class="table-wrapper mat-elevation-z8">
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let user"> {{user.name}} </td>
-        </ng-container>
-
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
-        </ng-container>        <!-- Role Column -->
-        <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-          <td mat-cell *matCellDef="let user">
-            <app-user-role-badge [role]="user.role"></app-user-role-badge>
-          </td>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let user">
-            <button mat-icon-button color="primary" (click)="openUserDetails(user); $event.stopPropagation()">
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button mat-icon-button color="accent">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetails(row)"></tr>
-
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-        </tr>
-      </table>
+    <div class="header-actions">
+      <mat-form-field class="filter-field">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search users" #input>
+      </mat-form-field>
+      
+      <button mat-raised-button color="primary" [routerLink]="['create']" class="create-user-btn">
+        <mat-icon>add</mat-icon>
+        <span>Create User</span>
+      </button>
     </div>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
+
+  <!-- Use the async pipe to subscribe to the users observable -->
+  <ng-container *ngIf="users$ | async">
+    <div class="table-wrapper mat-elevation-z8">
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+          </ng-container>
+          
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+            <td mat-cell *matCellDef="let user">
+              <app-user-role-badge [role]="user.role"></app-user-role-badge>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let user">
+              <button mat-icon-button color="primary" (click)="openUserDetails(user); $event.stopPropagation()"
+                      [attr.aria-label]="'View details for ' + user.name">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" 
+                      [attr.aria-label]="'Edit ' + user.name">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn"
+                      [attr.aria-label]="'Delete ' + user.name">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+              (click)="openUserDetails(row)"
+              [class.highlighted-row]="row.role === 'Admin'"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </ng-container>
 </div>

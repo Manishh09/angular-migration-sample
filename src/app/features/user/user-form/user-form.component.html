@@ -1,0 +1,55 @@
+<div class="user-form-container">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h2>{{ user ? 'Edit User' : 'Create New User' }}</h2>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter full name">
+        <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+        <mat-error *ngIf="hasError('name', 'minlength')">Name must be at least 3 characters</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Enter email address" type="email">
+        <mat-error *ngIf="hasError('email', 'required')">Email is required</mat-error>
+        <mat-error *ngIf="hasError('email', 'email')">Please enter a valid email address</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roleOptions" [value]="role">{{ role }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('role', 'required')">Role is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" placeholder="Enter phone number">
+        <mat-error *ngIf="hasError('phone', 'pattern')">Please enter a valid phone number</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address" placeholder="Enter address" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" mat-stroked-button (click)="onCancel()">Cancel</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="userForm.invalid && formSubmitted">
+        {{ user ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</div>

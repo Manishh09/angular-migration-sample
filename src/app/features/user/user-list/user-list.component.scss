@@ -9,17 +9,33 @@
     z-index: 2;
     background-color: white;
     padding: 20px 20px 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     
     h2 {
-      margin: 0;
+      margin: 0 0 16px 0;
       font-weight: 500;
+      color: #3f51b5;
     }
     
-    .filter-field {
-      width: 300px;
+    .header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      
+      .filter-field {
+        flex: 1;
+        min-width: 200px;
+        max-width: 400px;
+      }
+      
+      .create-user-btn {
+        white-space: nowrap;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
     }
   }
   
@@ -61,28 +77,10 @@
       }
     }
   }
-  
-  .role-chip {
-    padding: 4px 8px;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 500;
-    
-    &.admin {
-      background-color: #e3f2fd;
-      color: #1976d2;
-    }
-    
-    &.user {
-      background-color: #e8f5e9;
-      color: #388e3c;
-    }
-    
-    &.manager {
-      background-color: #fff3e0;
-      color: #f57c00;
-    }
-  }
+}
+
+.highlighted-row {
+  background-color: rgba(63, 81, 181, 0.08);
 }
 
 mat-paginator {
@@ -91,4 +89,29 @@ mat-paginator {
   bottom: 0;
   z-index: 1;
   background-color: white;
+}
+
+@media (max-width: 768px) {
+  .user-list-container {
+    .user-list-header {
+      padding: 16px 16px 0 16px;
+      
+      .header-actions {
+        flex-direction: column;
+        align-items: stretch;
+        
+        .filter-field {
+          max-width: none;
+        }
+        
+        .create-user-btn {
+          width: 100%;
+        }
+      }
+    }
+    
+    .table-wrapper {
+      margin: 16px;
+    }
+  }
 }

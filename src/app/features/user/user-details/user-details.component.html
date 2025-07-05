@@ -9,7 +9,8 @@
     
     <mat-card-content>
       <div class="user-profile-section">
-        <div class="user-avatar">          <div class="avatar-circle" matTooltip="User avatar">
+        <div class="user-avatar">
+          <div class="avatar-circle" matTooltip="User avatar">
             {{ user.name.charAt(0) }}{{ (user.name.split(' ')[1] || '').charAt(0) }}
           </div>
           <div class="user-role">
@@ -53,7 +54,12 @@
               </div>
               <div class="info-row">
                 <span class="info-label">Role:</span>
-                <span class="info-value">{{ user.role }}</span>
+                <span class="info-value" 
+                      [class.admin-role]="user.role === 'Admin'"
+                      [class.manager-role]="user.role === 'Manager'"
+                      [class.user-role]="user.role === 'User'">
+                  {{ user.role }}
+                </span>
               </div>
             </mat-card-content>
           </mat-card>
@@ -62,7 +68,8 @@
     </mat-card-content>
     
     <mat-card-actions>
-      <button mat-stroked-button color="warn" matTooltip="Delete this user" class="action-button">
+      <button mat-stroked-button color="warn" matTooltip="Delete this user" class="action-button"
+              [disabled]="user.role === 'Admin'">
         <mat-icon>delete</mat-icon>
         <span class="button-text">Delete</span>
       </button>
