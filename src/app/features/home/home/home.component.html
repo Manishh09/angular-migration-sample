@@ -1,14 +1,14 @@
-<div class="home-wrapper">
+<main class="home-wrapper" role="main">
   <mat-card class="home-card">
     <mat-card-header>
-      <mat-card-title>Angular Migration Journey</mat-card-title>
-      <div class="spacer"></div>
+      <mat-card-title id="home-title">Angular Migration Journey</mat-card-title>
+      <div class="spacer" aria-hidden="true"></div>
       <mat-card-subtitle>From Angular 14 → 15</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <p>This application demonstrates a comprehensive upgrade path from Angular 14 to 15, showcasing best practices in:</p>
-      <ul>
+      <ul aria-label="Angular best practices">
         <li>Feature modules with lazy loading</li>
         <li>Service architecture and dependency injection</li>
         <li>HTTP interceptors for authentication and error handling</li>
@@ -19,10 +19,14 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="navigateToUsers()">
-        <mat-icon>people</mat-icon>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="navigateToUsers()"
+        aria-label="Explore User Module">
+        <mat-icon aria-hidden="true">people</mat-icon>
         <span>Explore User Module</span>
       </button>
     </mat-card-actions>
   </mat-card>
-</div>
+</main>
